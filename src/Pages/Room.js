@@ -11,7 +11,7 @@ const  Room = () => {
   };
   const [sock, setSock] = useState(null)
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3000')
+    const ws = new WebSocket('ws://192.168.1.8:3000')
     setSock(ws)
     return () => {
       if (ws.readyState === 1) {
