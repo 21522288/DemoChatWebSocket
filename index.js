@@ -94,4 +94,4 @@ app.use('/',(req,res)=>{
     res.send('hello')
 })
 const port = process.env.PORT||8080
-server.listen(port,"0.0.0.0",()=>console.log("server is listening"))
+server.listen(port,()=>console.log("server is listening on "+port))
