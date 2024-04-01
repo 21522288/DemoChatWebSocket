@@ -1,17 +1,33 @@
-// const app = express();
-// const http = require('http');
-// const server = http.createServer(app)
-var server = require('ws').Server;
-var s = new server({port:3000});
+const express = require('express');
+const app = express();
+const path = require('path');
+const fs = require('fs')
+const cors = require('cors')
+const https = require('https');
+const server = https.createServer({
+    key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
+    cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem')),
+    requestCert: false,
+    rejectUnauthorized: false
+},app)
+// const server = https.createServer(app)
+var WebSocket = require('ws');
+const wss = new WebSocket.Server({server})
+app.use(cors({
+    origin:'*'
+}))
+// var s = new server({port:3000});
 let Room1 = [];
 let Room2 = [];
+
+
 
 // This code generates unique userid for everyuser.
 const getUniqueID = () => {
   const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   return s4() + s4() + '-' + s4();
 };
-s.on('connection',function(ws){
+wss.on('connection',function(ws){
     ws.on('message',function(message){
         message = JSON.parse(message);
         if(message.type === "name"){
@@ -60,6 +76,8 @@ s.on('connection',function(ws){
         //     }));
     })
    
+
+
     ws.on('close',function(){
         console.log("one client closed"+ws.personName)
         Room1 = Room1.filter(function (connection) {
@@ -72,3 +90,8 @@ s.on('connection',function(ws){
     })
     console.log("one client connected" )
 })
+app.use('/',(req,res)=>{
+    res.send('hello')
+})
+const port = process.env.PORT||8080
+server.listen(port,"0.0.0.0",()=>console.log("server is listening"))
