@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/DemoChatWebSocket/static/css/main.9df156c5.css",
-    "main.js": "/DemoChatWebSocket/static/js/main.5286b47d.js",
+    "main.js": "/DemoChatWebSocket/static/js/main.968f44ae.js",
     "static/js/453.a74ff157.chunk.js": "/DemoChatWebSocket/static/js/453.a74ff157.chunk.js",
     "index.html": "/DemoChatWebSocket/index.html",
     "main.9df156c5.css.map": "/DemoChatWebSocket/static/css/main.9df156c5.css.map",
-    "main.5286b47d.js.map": "/DemoChatWebSocket/static/js/main.5286b47d.js.map",
+    "main.968f44ae.js.map": "/DemoChatWebSocket/static/js/main.968f44ae.js.map",
     "453.a74ff157.chunk.js.map": "/DemoChatWebSocket/static/js/453.a74ff157.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9df156c5.css",
-    "static/js/main.5286b47d.js"
+    "static/js/main.968f44ae.js"
   ]
 }
