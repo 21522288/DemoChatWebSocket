@@ -3,14 +3,14 @@ const app = express();
 const path = require('path');
 const fs = require('fs')
 const cors = require('cors')
-const https = require('https');
-const server = https.createServer({
-    key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
-    cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem')),
-    requestCert: false,
-    rejectUnauthorized: false
-},app)
-// const server = https.createServer(app)
+const https = require('http');
+// const server = https.createServer({
+//     key:fs.readFileSync(path.join(__dirname,'cert','key.pem')),
+//     cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem')),
+//     requestCert: false,
+//     rejectUnauthorized: false
+// },app)
+const server = https.createServer(app)
 var WebSocket = require('ws');
 const wss = new WebSocket.Server({server})
 app.use(cors({
