@@ -17,21 +17,21 @@ const  Home = () => {
         <div class="room-square">
     <span>Room 1</span>
     <button  onClick={() => {
-                navigate("/Room/Room 1/"+name)
-              }}>Tham gia</button>
+                navigate("/DemoChatWebSocket/Room/Room1/"+name+'/')
+              }}>Join</button>
   </div>
   {/* Room 2 */}
   <div class="room-square">
     <span>Room 2</span>
     <button  onClick={() => {
-                navigate("/Room/Room 2/"+name)
-              }}>Tham gia</button>
+                navigate("/DemoChatWebSocket/Room/Room2/"+name+'/')
+              }}>Join</button>
   </div>
       </div>
        
   <div class="wrapper">
-    <div class="input-label">Nhập tên</div>
-    <input type="text" class="text-input" placeholder="Tên của bạn" value={name} onChange={handleChange}/>
+    <div class="input-label">Input your name</div>
+    <input type="text" class="text-input" placeholder="Your name" value={name} onChange={handleChange}/>
   </div>
 
         </div>
