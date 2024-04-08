@@ -16,23 +16,16 @@ const wss = new WebSocket.Server({server})
 app.use(cors({
     origin:'*'
 }))
-// var s = new server({port:3000});
+
 let Room1 = [];
 let Room2 = [];
 
-
-
-// This code generates unique userid for everyuser.
-const getUniqueID = () => {
-  const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  return s4() + s4() + '-' + s4();
-};
 wss.on('connection',function(ws){
     ws.on('message',function(message){
         message = JSON.parse(message);
         if(message.type === "name"){
             ws.personName = message.data;
-            if(message.room === 'Room 1'){
+            if(message.room === 'Room1'){
                 Room1.push(ws)
             }
             else Room2.push(ws)
@@ -40,23 +33,20 @@ wss.on('connection',function(ws){
             return;
         }
         console.log("Received: "+message.data);
-        // s.clients.forEach(function e(client){
-        //     if(client != ws){
-        //         client.send(JSON.stringify({
-        //             name:ws.personName,
-        //             data:message.data
-        //             }));
-        //     }
-            
-        // })
-        if(message.room==='Room 1'){
+  
+        if(message.room==='Room1'){
             for(let i = 0; i < Room1.length;i++){
                 if(Room1[i]!=ws){
                     Room1[i].send(JSON.stringify({
                         name:ws.personName,
-                        data:message.data
+                        data:message.data,
+                        time:message.currentTime,
+                        avt:message.avatar
                         }));
                 }
+                Room1[i].send(JSON.stringify({
+                    roomSize:Room1.length
+                    }));
             }
         }
         else{
@@ -64,9 +54,14 @@ wss.on('connection',function(ws){
                 if(Room2[i]!=ws){
                     Room2[i].send(JSON.stringify({
                         name:ws.personName,
-                        data:message.data
+                        data:message.data,
+                        time:message.currentTime,
+                        avt:message.avatar
                         }));
                 }
+                Room2[i].send(JSON.stringify({
+                    roomSize:Room2.length
+                    }));
             }
         }
         //cái này là gưi riêng cho người gửi tin nhắn đến server
