@@ -27,8 +27,20 @@ wss.on('connection',function(ws){
             ws.personName = message.data;
             if(message.room === 'Room1'){
                 Room1.push(ws)
+                for(let i = 0; i < Room1.length; i++){
+                    Room1[i].send(JSON.stringify({
+                        roomSize:Room1.length
+                        }));
+                }
             }
-            else Room2.push(ws)
+            else {
+                Room2.push(ws)
+                for(let i = 0; i < Room2.length; i++){
+                    Room2[i].send(JSON.stringify({
+                        roomSize:Room2.length
+                        }));
+                    }
+            }
 
             return;
         }
@@ -44,9 +56,6 @@ wss.on('connection',function(ws){
                         avt:message.avatar
                         }));
                 }
-                Room1[i].send(JSON.stringify({
-                    roomSize:Room1.length
-                    }));
             }
         }
         else{
@@ -59,9 +68,6 @@ wss.on('connection',function(ws){
                         avt:message.avatar
                         }));
                 }
-                Room2[i].send(JSON.stringify({
-                    roomSize:Room2.length
-                    }));
             }
         }
         //cái này là gưi riêng cho người gửi tin nhắn đến server
@@ -78,9 +84,19 @@ wss.on('connection',function(ws){
         Room1 = Room1.filter(function (connection) {
             return connection !== ws;
           });
+        for(let i = 0; i < Room1.length; i++){
+            Room1[i].send(JSON.stringify({
+                roomSize:Room1.length
+                }));
+        }
           Room2 = Room2.filter(function (connection) {
             return connection !== ws;
           });
+          for(let i = 0; i < Room2.length; i++){
+            Room2[i].send(JSON.stringify({
+                roomSize:Room2.length
+                }));
+        }
        
     })
     console.log("one client connected" )
