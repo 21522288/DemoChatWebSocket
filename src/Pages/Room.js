@@ -18,7 +18,7 @@ const  Room = () => {
   },[])
   useEffect(() => {
     // const ws = new WebSocket('wss://demochatwebsocket.onrender.com')
-    const ws = new WebSocket('ws://localhost:8080')
+    const ws = new WebSocket('ws://192.168.1.7:8080')
     setSock(ws)
     return () => {
       if (ws.readyState === 1) {
@@ -52,9 +52,12 @@ if(sock!=null){
   }
   sock.onmessage = function(event){
     var json = JSON.parse(event.data);
+    if (json.hasOwnProperty('roomSize')){
     setNumber(json.roomSize);
+    }
     if (json.hasOwnProperty('name')){
       document.querySelector('#log').appendChild(Message(json.name, json.data,false, json.time, json.avt));
+      log.scrollTop = log.scrollHeight;
     }
   }
 }
@@ -70,12 +73,6 @@ function getRandomAvatar() {
   var randomIndex = Math.floor(Math.random() * avatars.length);
   return avatars[randomIndex];
 }
-const handleKeyPress = (event) => {
-  if (event.key === 'Enter') {
-    console.log('hhahahha')
-    setMessage((prevValue) => prevValue + '\n');
-  }
-};
 
 function Message(name,text,isYou,timetext,avt){
   var messageContainer = document.createElement("div");
@@ -87,6 +84,7 @@ function Message(name,text,isYou,timetext,avt){
   userName.textContent = name;
 
   var paragraph = document.createElement("pre");
+  paragraph.classList.add("paragraph")
   paragraph.textContent = text;
 
   var timeText = document.createElement("h6")
@@ -143,7 +141,7 @@ function Message(name,text,isYou,timetext,avt){
   <div class="chat-messages" id="log">
   </div>
   <div class="chat-input">
-    <textarea  type="text" id='Text' placeholder="Input message..."  value={message} onChange={handleChange}  />
+    <textarea  type="text" id='Text' placeholder="Input message..."  value={message} onChange={handleChange} wrap="soft" />
     <button  onClick={() => {
                 // var text = gettext.value.trim()
                 var time = new Date()

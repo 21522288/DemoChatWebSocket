@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 const  Home = () => {
     const navigate = useNavigate();
     const [name, setName] = useState('')
+    const [show, setShow] = useState(false)
     const handleChange = (e) => {
         setName(e.target.value);
       };
@@ -17,18 +18,23 @@ const  Home = () => {
         <div class="room-square">
     <span>Room 1</span>
     <button  onClick={() => {
-                navigate("/DemoChatWebSocket/Room/Room1/"+name+'/')
+      if(name!=''){
+        navigate("/DemoChatWebSocket/Room/Room1/"+name+'/')
+      }
+      else setShow(true)
               }}>Join</button>
   </div>
   {/* Room 2 */}
   <div class="room-square">
     <span>Room 2</span>
     <button  onClick={() => {
-                navigate("/DemoChatWebSocket/Room/Room2/"+name+'/')
+      if(name!='')
+      navigate("/DemoChatWebSocket/Room/Room2/"+name+'/')
+      else setShow(true)
               }}>Join</button>
   </div>
       </div>
-       
+       {show&&<div class='Alert'>Please input your name!</div>}
   <div class="wrapper">
     <div class="input-label">Input your name</div>
     <input type="text" class="text-input" placeholder="Your name" value={name} onChange={handleChange}/>
@@ -39,3 +45,4 @@ const  Home = () => {
     )
 }
 export default Home
+
